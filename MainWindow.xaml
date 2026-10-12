@@ -1,0 +1,96 @@
+<Window x:Class="MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="NewPOS | Punto de venta" Height="780" Width="1320" MinHeight="620" MinWidth="960"
+        WindowStartupLocation="CenterScreen" WindowState="Maximized" Background="#F3F6FA" FontFamily="Segoe UI">
+    <Window.Resources>
+        <SolidColorBrush x:Key="Ink" Color="#172B4D" />
+        <SolidColorBrush x:Key="Muted" Color="#718096" />
+        <Style x:Key="NavButton" TargetType="Button">
+            <Setter Property="Foreground" Value="#C5D0E1"/><Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/><Setter Property="Height" Value="42"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/><Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Padding" Value="12,0"/><Setter Property="Margin" Value="8,2"/>
+            <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="Button">
+                <Border x:Name="Bd" Background="{TemplateBinding Background}" CornerRadius="8">
+                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+                </Border><ControlTemplate.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Bd" Property="Background" Value="#293B58"/><Setter Property="Foreground" Value="White"/></Trigger>
+                    <Trigger Property="IsPressed" Value="True"><Setter TargetName="Bd" Property="Background" Value="#344B6E"/></Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate></Setter.Value></Setter>
+        </Style>
+        <Style x:Key="TopButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/><Setter Property="Foreground" Value="#52627A"/>
+            <Setter Property="BorderThickness" Value="0"/><Setter Property="Padding" Value="12,8"/><Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="Button"><Border x:Name="Bd" Background="{TemplateBinding Background}" CornerRadius="7" Padding="{TemplateBinding Padding}"><ContentPresenter/></Border><ControlTemplate.Triggers><Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Bd" Property="Background" Value="#EEF2F8"/><Setter Property="Foreground" Value="#2F5D9B"/></Trigger></ControlTemplate.Triggers></ControlTemplate></Setter.Value></Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions><ColumnDefinition x:Name="SidebarColumn" Width="248"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+        <Border Grid.Column="0" Background="#17263F">
+            <DockPanel LastChildFill="True">
+                <StackPanel DockPanel.Dock="Top">
+                    <Grid Height="74" Margin="16,0,12,6"><Grid.ColumnDefinitions><ColumnDefinition Width="42"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                        <Border Width="36" Height="36" CornerRadius="11" Background="#3478D4" VerticalAlignment="Center"><TextBlock Text="N" Foreground="White" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/></Border>
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center" x:Name="BrandText"><TextBlock Text="NewPOS" Foreground="White" FontSize="17" FontWeight="SemiBold"/><TextBlock Text="GESTIÓN COMERCIAL" Foreground="#8EA1BC" FontSize="9"/></StackPanel>
+                    </Grid>
+                    <Button Style="{StaticResource NavButton}" Tag="@sidebar" ToolTip="Contraer o expandir el menú"><StackPanel Orientation="Horizontal"><TextBlock Text="☰" FontSize="18" Width="28"/><TextBlock Text="Contraer menú" x:Name="CollapseText" FontSize="12"/></StackPanel></Button>
+                </StackPanel>
+                <StackPanel DockPanel.Dock="Bottom" Margin="0,0,0,10">
+                    <Border Height="1" Background="#34445D" Margin="18,8"/>
+                    <Button Style="{StaticResource NavButton}" Tag="Salida" ToolTip="Salir de NewPOS"><StackPanel Orientation="Horizontal"><TextBlock Text="⇥" FontSize="19" Width="28"/><TextBlock Text="Salida" x:Name="ExitText" FontSize="13"/></StackPanel></Button>
+                    <Border Background="#22334E" CornerRadius="9" Margin="14,8" Padding="10" x:Name="ProfilePanel"><StackPanel Orientation="Horizontal"><Border Width="32" Height="32" Background="#48688F" CornerRadius="16"><TextBlock Text="A" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/></Border><StackPanel Margin="9,0,0,0" VerticalAlignment="Center"><TextBlock Text="Administrador" Foreground="White" FontSize="11"/><TextBlock Text="Sesión activa" Foreground="#8EA1BC" FontSize="9"/></StackPanel></StackPanel></Border>
+                </StackPanel>
+                <ScrollViewer VerticalScrollBarVisibility="Auto"><StackPanel Margin="0,4,0,8">
+                    <TextBlock Text="ESPACIO DE TRABAJO" Foreground="#71839E" FontSize="9" FontWeight="SemiBold" Margin="20,9,0,6" x:Name="WorkspaceLabel"/>
+                    <Button Style="{StaticResource NavButton}" Tag="Inicio" ToolTip="Inicio"><StackPanel Orientation="Horizontal"><TextBlock Text="⌂" FontSize="20" Width="28"/><TextBlock Text="Inicio" FontSize="13"/></StackPanel></Button>
+                    <TextBlock Text="OPERACIÓN" Foreground="#71839E" FontSize="9" FontWeight="SemiBold" Margin="20,17,0,6" x:Name="OperationLabel"/>
+                    <Button Style="{StaticResource NavButton}" Tag="@principal" ToolTip="Principal"><Grid><Grid.ColumnDefinitions><ColumnDefinition Width="28"/><ColumnDefinition Width="*"/><ColumnDefinition Width="20"/></Grid.ColumnDefinitions><TextBlock Text="▦" FontSize="17"/><TextBlock Grid.Column="1" Text="Principal" FontSize="13"/><TextBlock Grid.Column="2" Text="⌄" HorizontalAlignment="Center"/></Grid></Button>
+                    <StackPanel x:Name="PrincipalSubmenu" Margin="0,0,0,2">
+                        <Button Style="{StaticResource NavButton}" Tag="Dashboard" ToolTip="Dashboard"><StackPanel Orientation="Horizontal" Margin="12,0,0,0"><TextBlock Text="◫" Width="25"/><TextBlock Text="Dashboard" FontSize="12"/></StackPanel></Button>
+                        <Button Style="{StaticResource NavButton}" Tag="POS" ToolTip="POS"><StackPanel Orientation="Horizontal" Margin="12,0,0,0"><TextBlock Text="▣" Width="25"/><TextBlock Text="POS" FontSize="12"/></StackPanel></Button>
+                        <Button Style="{StaticResource NavButton}" Tag="Usuarios" ToolTip="Usuarios"><StackPanel Orientation="Horizontal" Margin="12,0,0,0"><TextBlock Text="♙" Width="25"/><TextBlock Text="Usuarios" FontSize="12"/></StackPanel></Button>
+                        <Button Style="{StaticResource NavButton}" Tag="Productos" ToolTip="Productos"><StackPanel Orientation="Horizontal" Margin="12,0,0,0"><TextBlock Text="▤" Width="25"/><TextBlock Text="Productos" FontSize="12"/></StackPanel></Button>
+                    </StackPanel>
+                    <Button Style="{StaticResource NavButton}" Tag="@ventas" ToolTip="Ventas"><Grid><Grid.ColumnDefinitions><ColumnDefinition Width="28"/><ColumnDefinition Width="*"/><ColumnDefinition Width="20"/></Grid.ColumnDefinitions><TextBlock Text="$" FontSize="17"/><TextBlock Grid.Column="1" Text="Ventas" FontSize="13"/><TextBlock Grid.Column="2" Text="⌄" HorizontalAlignment="Center"/></Grid></Button>
+                    <StackPanel x:Name="VentasSubmenu" Margin="0,0,0,2">
+                        <Button Style="{StaticResource NavButton}" Tag="Ventas por fecha" ToolTip="Ventas por fecha"><StackPanel Orientation="Horizontal" Margin="12,0,0,0"><TextBlock Text="◷" Width="25"/><TextBlock Text="Por fecha" FontSize="12"/></StackPanel></Button>
+                        <Button Style="{StaticResource NavButton}" Tag="Ventas por producto" ToolTip="Ventas por producto"><StackPanel Orientation="Horizontal" Margin="12,0,0,0"><TextBlock Text="▤" Width="25"/><TextBlock Text="Por producto" FontSize="12"/></StackPanel></Button>
+                        <Button Style="{StaticResource NavButton}" Tag="Ventas por forma de pago" ToolTip="Ventas por forma de pago"><StackPanel Orientation="Horizontal" Margin="12,0,0,0"><TextBlock Text="▣" Width="25"/><TextBlock Text="Por forma de pago" FontSize="12"/></StackPanel></Button>
+                        <Button Style="{StaticResource NavButton}" Tag="Consulta de tickets" ToolTip="Consulta de tickets"><StackPanel Orientation="Horizontal" Margin="12,0,0,0"><TextBlock Text="▧" Width="25"/><TextBlock Text="Tickets" FontSize="12"/></StackPanel></Button>
+                    </StackPanel>
+                    <Button Style="{StaticResource NavButton}" Tag="Cobrar" ToolTip="Cobrar"><StackPanel Orientation="Horizontal"><TextBlock Text="＋" FontSize="20" Width="28"/><TextBlock Text="Cobrar" FontSize="13"/></StackPanel></Button>
+                    <TextBlock Text="ADMINISTRACIÓN" Foreground="#71839E" FontSize="9" FontWeight="SemiBold" Margin="20,17,0,6" x:Name="AdminLabel"/>
+                    <Button Style="{StaticResource NavButton}" Tag="Configuración" ToolTip="Configuración"><StackPanel Orientation="Horizontal"><TextBlock Text="⚙" FontSize="17" Width="28"/><TextBlock Text="Configuración" FontSize="13"/></StackPanel></Button>
+                    <Button Style="{StaticResource NavButton}" Tag="Usuarios" ToolTip="Usuarios"><StackPanel Orientation="Horizontal"><TextBlock Text="♙" FontSize="17" Width="28"/><TextBlock Text="Usuarios" FontSize="13"/></StackPanel></Button>
+                    <Button Style="{StaticResource NavButton}" Tag="Exportar a" ToolTip="Exportar a"><StackPanel Orientation="Horizontal"><TextBlock Text="⇧" FontSize="19" Width="28"/><TextBlock Text="Exportar a" FontSize="13"/></StackPanel></Button>
+                </StackPanel></ScrollViewer>
+            </DockPanel>
+        </Border>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions><RowDefinition Height="62"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+            <Border Background="White" BorderBrush="#E4EAF1" BorderThickness="0,0,0,1">
+                <DockPanel Margin="20,0">
+                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Left" VerticalAlignment="Center">
+                        <Button Style="{StaticResource TopButton}" Tag="@sidebar" ToolTip="Mostrar u ocultar menú lateral"><TextBlock Text="☰" FontSize="18"/></Button>
+                        <Border Width="1" Height="26" Background="#E4EAF1" Margin="8,0"/>
+                        <Button Style="{StaticResource TopButton}" Tag="Inicio" ToolTip="Inicio"><StackPanel Orientation="Horizontal"><TextBlock Text="⌂" Margin="0,0,6,0"/><TextBlock Text="Inicio"/></StackPanel></Button>
+                        <Button Style="{StaticResource TopButton}" Tag="Dashboard" ToolTip="Dashboard"><StackPanel Orientation="Horizontal"><TextBlock Text="◫" Margin="0,0,6,0"/><TextBlock Text="Dashboard"/></StackPanel></Button>
+                        <Button Style="{StaticResource TopButton}" Tag="POS" ToolTip="Punto de venta"><StackPanel Orientation="Horizontal"><TextBlock Text="▣" Margin="0,0,6,0"/><TextBlock Text="POS"/></StackPanel></Button>
+                        <Button Style="{StaticResource TopButton}" Tag="Productos" ToolTip="Productos"><StackPanel Orientation="Horizontal"><TextBlock Text="▤" Margin="0,0,6,0"/><TextBlock Text="Productos"/></StackPanel></Button>
+                        <Button Style="{StaticResource TopButton}" Tag="Ventas por fecha" ToolTip="Ventas"><StackPanel Orientation="Horizontal"><TextBlock Text="$" Margin="0,0,6,0"/><TextBlock Text="Ventas"/></StackPanel></Button>
+                        <Button Style="{StaticResource TopButton}" Tag="Cobrar" ToolTip="Cobrar"><StackPanel Orientation="Horizontal"><TextBlock Text="＋" Margin="0,0,6,0"/><TextBlock Text="Cobrar"/></StackPanel></Button>
+                        <Button Style="{StaticResource TopButton}" Tag="Configuración" ToolTip="Configuración"><TextBlock Text="⚙" FontSize="17"/></Button>
+                        <Button Style="{StaticResource TopButton}" Tag="Exportar a" ToolTip="Exportar a"><TextBlock Text="⇧" FontSize="17"/></Button>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" VerticalAlignment="Center"><Border Width="8" Height="8" CornerRadius="4" Background="#35B779" Margin="0,0,8,0"/><TextBlock Text="Sistema listo" Foreground="#718096" FontSize="11" VerticalAlignment="Center"/></StackPanel>
+                </DockPanel>
+            </Border>
+            <Frame x:Name="ContentFrame" Grid.Row="1" NavigationUIVisibility="Hidden" Background="#F3F6FA"/>
+        </Grid>
+    </Grid>
+</Window>
